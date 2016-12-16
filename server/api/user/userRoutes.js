@@ -1,33 +1,17 @@
-var router = require('express').Router();
-// var restful = require('node-restful');
-var user = ["Michael"];
-// setup boilerplate route jsut to satisfy a request
-// for building
-const MongoClient = require('mongodb').MongoClient;
+var restful = require('node-restful');
+module.exports = function(app, route) {
 
-MongoClient.connect('mongodb://localhost:27017/finals-test', (err, db) => {
-                    if (err){
-                        return console.log('Unable to connect to MongoDB server');
-                    }
-                    console.log('Connected to MongoDB');
-                    db.close();
-                    });
-                    
+  // Setup the controller for REST.
+  var rest = restful.model(
+    'user',
+    app.models.user
+  ).methods(['get', 'put', 'post', 'delete']);
 
+  // Register this endpoint with the application.
+  rest.register(app, route);
 
-
-//route() will allow you to use same path for different HTTP operation.
-//So if you have same URL but with different HTTP OP such as POST,GET etc
-//Then use route() to remove redundant code.
-router.route('/')
-  .get(function(req, res){
-    console.log('Hey from user!!');
-    res.json(user);
-  });
-
-router.get('/error', function(req,res){
-    console.log("An error appeared!");
-    throw "error";
-});
-
-module.exports = router;
+  // Return middleware.
+  return function(req, res, next) {
+    next();
+  };
+};

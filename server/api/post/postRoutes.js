@@ -1,11 +1,17 @@
-var router = require('express').Router();
+var restful = require('node-restful');
+module.exports = function(app, route) {
 
-// setup boilerplate route jsut to satisfy a request
-// for building
-router.route('/')
-  .get(function(req, res){
-    console.log('Hey from post!!');
-    res.send({ok: true});
-  });
+  // Setup the controller for REST.
+  var rest = restful.model(
+    'post',
+    app.models.post
+  ).methods(['get', 'put', 'post', 'delete']);
 
-module.exports = router;
+  // Register this endpoint with the application.
+  rest.register(app, route);
+
+  // Return middleware.
+  return function(req, res, next) {
+    next();
+  };
+};
