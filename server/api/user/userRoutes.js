@@ -2,13 +2,11 @@ var express = require('express')
 var app = express ();
 var router = require('express').Router()
 var mongoose = require('mongoose');
-var UserSchema = require('./userModel');
-
-// Populate Data
-
+var UserSchema = require('./userModel.js');
 
 // GET: User List
-router.route('/').get(function(req, res){
+router.route('/')
+    .get(function(req, res){
         UserSchema.find(function(error, users) {
             if (error){
                 res.send(500);
@@ -20,20 +18,12 @@ router.route('/').get(function(req, res){
     })
 
 // POST: Create a user
-.post(function(req, res){
-        var newuser = {};
-    
-        newuser.username = String(req.body.username); 
-        newuser.address = String(req.body.address);
-    
-        var newSchema = new UserSchema({
-            username: newuser.username,
-            address: newuser.address
-        });
+    .post(function(req, res){
+        var user= new UserSchema(req.body)
     
         console.log("Posted: ", req.body);
     
-        UserSchema.save(function(error, users) {
+        user.save(function(error, users) {
             if (error){
                 res.send(500);
                 console.log("Error: " + error);
@@ -57,18 +47,11 @@ router.route('/:user_id')
         });
     })
 // PUT: Update user with new info
-.put(function(req, res){
+    .put(function(req, res){
         console.log("PUT: ", req.params.user_id);
-        var newuser = {};
-        newuser.username = String(req.body.username)
-        newuser.address = String(req.body.address);
-    
-        var newSchema = new UserSchema({
-        username: newuser.username,
-        address: newuser.address
-        });
+        var user= new UserSchema(req.body);
         
-        UserSchema.update({_id:req.paramas.user_id},newSchema, function(error, updatedUser){
+        user.update({_id: id}, function(error, updatedUser){
             if (error){
             res.send(500);
             console.log("Error: " + error);
@@ -79,7 +62,7 @@ router.route('/:user_id')
     })
 
 // DELETE: Delete a user
-.delete(function(req,res){
+    .delete(function(req,res){
         UserSchema.findByIdAndRemove(req.params.user_id, function(error,delUser){
             if (error){
                 res.send(500);

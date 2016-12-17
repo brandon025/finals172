@@ -21,7 +21,7 @@ mongoose.connect(config.db.url);
 app.use('/api/', api);
 
 app.use(function(err, req, res, next) {
-    res.send("Error 500:  " + err.toString());
+    res.status(500).send( err.toString());
 });
 
 // API endpoints such as below has been moved to user Router within api module
