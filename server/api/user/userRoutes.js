@@ -19,7 +19,7 @@ router.route('/')
 
 // POST: Create a user
     .post(function(req, res){
-        var user= new UserSchema(req.body)
+        var user= new UserSchema(req.body);
     
         console.log("Posted: ", req.body);
     
@@ -28,7 +28,7 @@ router.route('/')
                 res.send(500);
                 console.log("Error: " + error);
             }else{
-                res.send(200,newuser)
+                res.send(200,users)
             }
         });
     });
@@ -36,8 +36,9 @@ router.route('/')
 // GET: Specific user
 router.route('/:user_id')
     .get(function(req, res){
-    console.log("GET: ", req.paramas.user_id)
-    UserSchema.findById(req.paramas.user_id, function(error, users){
+    console.log("GET specific: ", req.params.user_id)
+    var user= new UserSchema(req.body);
+    UserSchema.findOne({_id : req.params.user_id}, function(error, users){
         if (error){
             res.send(500);
             console.log("Error: " + error);
@@ -51,7 +52,7 @@ router.route('/:user_id')
         console.log("PUT: ", req.params.user_id);
         var user= new UserSchema(req.body);
         
-        user.update({_id: id}, function(error, updatedUser){
+        user.update({_id: id}, user, function(error, updatedUser){
             if (error){
             res.send(500);
             console.log("Error: " + error);
