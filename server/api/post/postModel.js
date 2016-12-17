@@ -17,14 +17,14 @@ var PostSchema = new Schema({
         {type: Schema.Types.ObjectId,
          ref: 'user',
          required:true
-        }
+        },
     
-   categories:{
+   categories:[{
         type: Schema.Types.ObjectId,
          ref: 'category',
          required:true
-    }
+    }]
 
 });
 
-module.exports = PostSchema;
+module.exports = mongoose.model('posts', PostSchema);

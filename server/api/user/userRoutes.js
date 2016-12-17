@@ -49,10 +49,9 @@ router.route('/:user_id')
     })
 // PUT: Update user with new info
     .put(function(req, res){
-        console.log("PUT: ", req.params.user_id);
         var user= new UserSchema(req.body);
-        
-        user.update({_id: id}, user, function(error, updatedUser){
+        console.log("PUT: ", req.params.user_id);
+        user.update({_id : req.params.user_id}, req.body, function(error, updatedUser){
             if (error){
             res.send(500);
             console.log("Error: " + error);
@@ -78,7 +77,7 @@ app.use('/', router);
 
 app.use(function(error,req,res,next){
     console.log(error);
-    res.status(500).send({"Error" : error.stack});
+    res.status(500);
 });
 
 module.exports = router;
