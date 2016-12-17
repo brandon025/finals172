@@ -1,17 +1,13 @@
-var restful = require('node-restful');
-module.exports = function(app, route) {
+var express = require('express')
+var app = express ();
+var router = require('express').Router()
+var mongoose = require('mongoose');
+var CategorySchema = require('./categoryModel');
 
-  // Setup the controller for REST.
-  var rest = restful.model(
-    'category',
-    app.models.categories
-  ).methods(['get', 'put', 'post', 'delete']);
+router.route('/')
+    .get(function(req, res){
+        console.log('Hey from user!!');
+    res.send({ok: true});
+    });
 
-  // Register this endpoint with the application.
-  rest.register(app, route);
-
-  // Return middleware.
-  return function(req, res, next) {
-    next();
-  };
-};
+module.exports = router;

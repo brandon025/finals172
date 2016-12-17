@@ -12,7 +12,6 @@ mongoose.connect(config.db.url);
  app.use(bodyParser.urlencoded({ extended: true }));
  app.use(bodyParser.json());
 
-
 //In a large application, 
 //things could easily get out of control 
 //if we keep adding code to a single 

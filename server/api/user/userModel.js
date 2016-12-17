@@ -6,7 +6,7 @@ var UserSchema = new Schema({
     type: String,
     unique: true,
     required: true
-  }
+  },
     
     address: {
     type: String,
@@ -15,4 +15,4 @@ var UserSchema = new Schema({
   }
 });
 
-module.exports = UserSchema;
+module.exports = mongoose.model('user', UserSchema);
