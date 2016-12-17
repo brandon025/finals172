@@ -17,10 +17,10 @@ router.route('/').get(function(req, res){
                 res.send(200,users)
             }
         });
-    });
+    })
 
 // POST: Create a user
-router.route('/').post(function(req, res){
+.post(function(req, res){
         var newuser = {};
     
         newuser.username = String(req.body.username); 
@@ -55,9 +55,9 @@ router.route('/:user_id')
                 res.send(200,users);
             }
         });
-    });
+    })
 // PUT: Update user with new info
-router.route('/:user_id').put(function(req, res){
+.put(function(req, res){
         console.log("PUT: ", req.params.user_id);
         var newuser = {};
         newuser.username = String(req.body.username)
@@ -76,10 +76,10 @@ router.route('/:user_id').put(function(req, res){
                 res.send(200,updatedUser);
             }
         });
-    });
+    })
 
 // DELETE: Delete a user
-router.route('/:user_id').delete(function(req,res){
+.delete(function(req,res){
         UserSchema.findByIdAndRemove(req.params.user_id, function(error,delUser){
             if (error){
                 res.send(500);
